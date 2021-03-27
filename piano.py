@@ -24,7 +24,6 @@ def find(arr, time):
 
 def press(note):#48 83
 	if note in mapping.keys():
-		unpress(note)
 		win32api.keybd_event(letter[mapping[note]], 0, 0, 0)
 		#print("Press: ", letter[mapping[note]])
 	return
@@ -51,7 +50,7 @@ tick_accuracy = 0
 print("尝试计算播放速度......")
 try:
 	bpm = 60000000 / midi_object.tracks[1][0].tempo
-	tick_accuracy = bpm / 10
+	tick_accuracy = bpm / 20
 	print("计算成功。")
 except:
 	tick_accuracy = int(input("计算失败，请检查文件是否完整，或者手动输入播放速度：（7）"))
@@ -85,17 +84,18 @@ for i,track in enumerate(midi_object.tracks):
 mmax = 0
 for i in end_track:
 	mmax = max(mmax, i['time'] + 1)
+start = {}
+print("开始转换乐谱...")
+for i in range(mmax):
+	start[str(i)] = find(tracks, i)
 stime = int(input("沉睡时间（秒）："))
 print("播放将于" + str(stime) + "秒后开始，请做好准备。")
 time.sleep(stime)
 for i in range(mmax):
-	notes = find(tracks, i)
-	end_notes = find(end_track, i)
-	if len(end_notes) != 0:
-		for note in end_notes:
+	if i != 0:
+		for note in start[str(i - 1)]:
 			unpress(str(note))
-	if len(notes) != 0:
-		for note in notes:
-			press(str(note))
-	time.sleep(0.05)
+	for note in start[str(i)]:
+		press(str(note))
+	time.sleep(0.025)
 print("播放结束。")
