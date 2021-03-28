@@ -13,6 +13,8 @@ pywin32 （用于模拟键盘输入）
 
 ## 使用方法
 
+对于没有接触过相关内容的用户，可以使用由@shadlc打包的exe文件：[下载链接](https://github.com/Misaka17032/genshin-lyre-auto-play/releases/download/V1.0/piano.exe)将midi文件直接拖放在文件之上即可开始。
+
 将曲谱放入名为`songs`的文件夹，并确保midi文件中的音符在中央C和上下两个八度的白键位。
 
 双击run.bat或者使用管理员权限运行`python piano.py`
