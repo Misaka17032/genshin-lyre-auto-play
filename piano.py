@@ -92,10 +92,10 @@ for i in range(mmax):
 shift = None
 while shift is None:
 	auto_tune = input("是否自动变调？([y]/n)")
-	if auto_tune == "y" or auto_tune == "":
+	if auto_tune == "y":
 		shift, score = tuner.get_shift_best_match(tracks)
 		print("变调: ", shift, " 按键比例: ", score)
-	elif auto_tune == "n":
+	elif auto_tune == "n" or auto_tune == "":
 		shift = 0
 stime = int(input("沉睡时间（秒）："))
 print("播放将于" + str(stime) + "秒后开始，请做好准备。")
