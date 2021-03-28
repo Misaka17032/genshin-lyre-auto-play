@@ -1,6 +1,7 @@
 import time
 import win32api
 import win32con
+import sys
 
 from midi.midifiles.midifiles import MidiFile
 
@@ -39,12 +40,11 @@ def make_map():
 		mapping[k] = s[i]
 	print(mapping)
 
-midi_file = input("Midi文件名（不含后缀）：")
-midi_object = MidiFile("./songs/" + midi_file + ".mid")
 try:
-	midi_object = MidiFile("./songs/" + midi_file + ".mid")
+	midi_object =  MidiFile(sys.argv[1])
 except:
-	print("文件损坏或不存在。")
+	print("请将midi文件拖入进行播放")
+	input("文件损坏或不存在")
 	quit()
 tick_accuracy = 0
 print("尝试计算播放速度......")
@@ -98,4 +98,4 @@ for i in range(mmax):
 	for note in start[str(i)]:
 		press(str(note))
 	time.sleep(0.025)
-print("播放结束。")
+input("播放结束,感谢使用")

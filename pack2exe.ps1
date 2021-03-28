@@ -1,0 +1,1 @@
+pyinstaller --clean -i .\icon.ico -F .\piano.py
