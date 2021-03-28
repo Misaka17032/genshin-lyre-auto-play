@@ -1,6 +1,11 @@
+from __future__ import print_function
+import ctypes, sys
+import os
 import time
 import win32api
 import win32con
+import win32gui
+import threading
 
 from midi.midifiles.midifiles import MidiFile
 from midi.helpers import tuner
@@ -39,6 +44,34 @@ def make_map():
 	for i, k in enumerate(mapping.keys()):
 		mapping[k] = s[i]
 	print(mapping)
+
+def pop_window(name):
+	handle = win32gui.FindWindow(0, name)
+	if handle == 0:
+		return False
+	else:
+		win32gui.SendMessage(handle, win32con.WM_SYSCOMMAND,
+								win32con.SC_RESTORE, 0)
+		win32gui.SetForegroundWindow(handle)
+		while (win32gui.IsIconic(handle)):
+			continue
+		return True
+
+def watch_dog(name):
+	while True:
+		if win32gui.GetWindowText(win32gui.GetForegroundWindow())!=name:
+			os._exit(0)
+
+def is_admin():
+	try:
+		return ctypes.windll.shell32.IsUserAnAdmin()
+	except:
+		return False
+if is_admin():
+	pass
+else:
+	ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, __file__, None, 1)
+	exit(0)
 
 midi_file = input("Midi文件名（不含后缀）：")
 midi_object = MidiFile("./songs/" + midi_file + ".mid")
@@ -97,9 +130,11 @@ while shift is None:
 		print("变调: ", shift, " 按键比例: ", score)
 	elif auto_tune == "n" or auto_tune == "":
 		shift = 0
-stime = int(input("沉睡时间（秒）："))
-print("播放将于" + str(stime) + "秒后开始，请做好准备。")
-time.sleep(stime)
+if not pop_window("原神"): #若置顶失败则询问
+	stime = int(input("沉睡时间（秒）："))
+	print("播放将于" + str(stime) + "秒后开始，请做好准备。")
+	time.sleep(stime)
+threading.Thread(target=watch_dog,args=("原神",)).start()
 for i in range(mmax):
 	if i != 0:
 		for note in start[str(i - 1)]:
