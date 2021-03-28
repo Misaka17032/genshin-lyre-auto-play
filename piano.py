@@ -3,6 +3,7 @@ import win32api
 import win32con
 
 from midi.midifiles.midifiles import MidiFile
+from midi.helpers import tuner
 
 letter = {'a': 65, 'b': 66, 'c': 67, 'd': 68, 'e': 69, 'f': 70, 'g': 71, 'h': 72, 'i': 73, 'j': 74, 'k': 75, 'l': 76, 'm': 77, 'n': 78, 'o': 79, 'p': 80, 'q': 81, 'r': 82, 's': 83, 't': 84, 'u': 85, 'v': 86, 'w': 87, 'x': 88, 'y': 89, 'z': 90}
 mapping = {'48': 'z', '50': 'x', '52': 'c', '53': 'v', '55': 'b', '57': 'n', '59': 'm', '60': 'a', '62': 's', '64': 'd', '65': 'f', '67': 'g', '69': 'h', '71': 'j', '72': 'q', '74': 'w', '76': 'e', '77': 'r', '79': 't', '81': 'y', '83': 'u'}
@@ -88,14 +89,22 @@ start = {}
 print("开始转换乐谱...")
 for i in range(mmax):
 	start[str(i)] = find(tracks, i)
+shift = None
+while shift is None:
+	auto_tune = input("是否自动变调？([y]/n)")
+	if auto_tune == "y" or auto_tune == "":
+		shift, score = tuner.get_shift_best_match(tracks)
+		print("变调: ", shift, " 按键比例: ", score)
+	elif auto_tune == "n":
+		shift = 0
 stime = int(input("沉睡时间（秒）："))
 print("播放将于" + str(stime) + "秒后开始，请做好准备。")
 time.sleep(stime)
 for i in range(mmax):
 	if i != 0:
 		for note in start[str(i - 1)]:
-			unpress(str(note))
+			unpress(str(note+shift))
 	for note in start[str(i)]:
-		press(str(note))
+		press(str(note+shift))
 	time.sleep(0.025)
 print("播放结束。")
