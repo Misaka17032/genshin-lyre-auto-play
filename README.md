@@ -9,6 +9,7 @@
 Windows
 python 3.x
 pywin32 （用于模拟键盘输入）
+numpy
 ```
 
 配置好python环境后使用pip install pywin32命令安装模块。
