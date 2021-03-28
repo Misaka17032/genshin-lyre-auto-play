@@ -17,6 +17,8 @@ pywin32 （用于模拟键盘输入）
 
 ## 声明
 
-个人使用
+转载请务必加上来源，谢谢。
 
-改自https://github.com/Misaka17032/genshin-lyre-auto-play
+多人联携模式正在开发中。
+
+可以给一个star嘛，秋梨膏~
