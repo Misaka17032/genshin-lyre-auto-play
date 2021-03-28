@@ -73,8 +73,7 @@ else:
 	ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, __file__, None, 1)
 	exit(0)
 
-midi_file = input("Midi文件名（不含后缀）：")
-midi_object = MidiFile("./songs/" + midi_file + ".mid")
+midi_file = input("Midi文件名（不含后缀）："
 try:
 	midi_object = MidiFile("./songs/" + midi_file + ".mid")
 except:
