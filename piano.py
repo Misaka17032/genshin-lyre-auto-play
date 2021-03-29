@@ -138,11 +138,16 @@ while shift is None:
 		print("变调: ", shift, " 按键比例: ", score)
 	elif auto_tune == "n" or auto_tune == "":
 		shift = 0
-if not pop_window("原神"): #若置顶失败则询问
+close_on_switch = input("是否在切换出原神窗口时自动关闭本程序？（存在问题请不使用此选项）y/N")
+auto_open = input("是否直接自动打开原神？（存在问题请不使用此选项）y/N")
+if auto_open=='y':
+	pop_window("原神")
+else:
 	stime = int(input("沉睡时间（秒）："))
 	print("播放将于" + str(stime) + "秒后开始，请做好准备。")
-	time.sleep(stime)
-threading.Thread(target=watch_dog,args=("原神",)).start()
+	time.sleep(stime) 
+if close_on_switch=='y':
+	threading.Thread(target=watch_dog,args=("原神",)).start()
 for i in range(mmax):
 	if i != 0:
 		for note in start[str(i - 1)]:

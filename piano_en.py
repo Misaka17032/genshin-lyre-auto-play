@@ -138,11 +138,16 @@ while shift is None:
 		print("Tone shift: ", shift, " Key ratio: ", score)
 	elif auto_tune == "n" or auto_tune == "":
 		shift = 0
-if not pop_window("Genshin Impact"):
+close_on_switch = input("Close this program once switch out game window?(Don't use this if there's any problem)(y/N)")
+auto_open = input("Open game window automatically？(Don't use this if there's any problem)(y/N)")
+if auto_open=='y':
+	pop_window("Genshin Impact")
+else:
 	stime = int(input("Sleep time(seconds):"))
 	print("Play will start in " + str(stime) + " seconds")
 	time.sleep(stime)
-threading.Thread(target=watch_dog,args=("Genshin Impact",)).start()
+if close_on_switch=='y':
+	threading.Thread(target=watch_dog,args=("Genshin Impact",)).start()
 for i in range(mmax):
 	if i != 0:
 		for note in start[str(i - 1)]:
