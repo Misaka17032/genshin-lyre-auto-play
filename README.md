@@ -1,5 +1,5 @@
 # genshin-lyre-auto-play
-根据midi文件演奏“风物之诗琴”的脚本。由python驱动。
+根据midi文件演奏“风物之诗琴”的脚本。由python驱动。[English](./README_en.md)
 
 [官方声明](./1.png)
 
