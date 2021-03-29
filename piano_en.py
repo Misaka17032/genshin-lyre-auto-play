@@ -138,7 +138,7 @@ while shift is None:
 		print("Tone shift: ", shift, " Key ratio: ", score)
 	elif auto_tune == "n" or auto_tune == "":
 		shift = 0
-if not pop_window("Genshin Impact"): #若置顶失败则询问
+if not pop_window("Genshin Impact"):
 	stime = int(input("Sleep time(seconds):"))
 	print("Play will start in " + str(stime) + " seconds")
 	time.sleep(stime)
