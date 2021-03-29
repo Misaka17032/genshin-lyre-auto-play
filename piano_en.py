@@ -132,7 +132,7 @@ for i in range(mmax):
 	start[str(i)] = find(tracks, i)
 shift = None
 while shift is None:
-	auto_tune = input("Automatic tone shift?([y]/n)")
+	auto_tune = input("Automatic tone shift?([n]/y)")
 	if auto_tune == "y":
 		shift, score = tuner.get_shift_best_match(tracks)
 		print("Tone shift: ", shift, " Key ratio: ", score)
