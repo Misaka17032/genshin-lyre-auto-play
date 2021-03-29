@@ -82,7 +82,16 @@ except:
 tick_accuracy = 0
 print("尝试计算播放速度......")
 try:
-	bpm = 60000000 / midi_object.tracks[1][0].tempo
+	flag = False
+	for i in midi_object.tracks:
+		for j in i :
+			if j.dict()["type"] == "set_tempo":
+				flag = True
+				tempo = j.tempo
+				break
+		if flag:
+			break
+	bpm = 60000000 / tempo
 	tick_accuracy = bpm / 20
 	print("计算成功。")
 except:
@@ -115,7 +124,7 @@ for i,track in enumerate(midi_object.tracks):
 				last_on = info['time']
 				end_track.append(info)
 mmax = 0
-for i in end_track:
+for i in tracks:
 	mmax = max(mmax, i['time'] + 1)
 start = {}
 print("开始转换乐谱...")
