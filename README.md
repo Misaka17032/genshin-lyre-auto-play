@@ -78,6 +78,8 @@ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
 
 转载请务必加上来源，谢谢。请不要使用项目本体或者项目内曲谱进行任何盈利行为。
 
+还存在bug,欢迎各位大佬提交pr
+
 多人联携模式正在开发中。
 
 **可以给一个star嘛，秋梨膏~♥**
