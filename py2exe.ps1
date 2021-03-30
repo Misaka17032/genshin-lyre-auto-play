@@ -1,0 +1,1 @@
+pyinstaller -F -i favicon.ico piano.py --uac-admin
