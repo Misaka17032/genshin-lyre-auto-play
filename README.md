@@ -51,7 +51,7 @@ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
 
 ### 3.运行
 
-使用管理员权限运行`python piano.py`
+使用管理员权限运行`python piano.py`，或者双击`run.bat`
 
 </details>
 
