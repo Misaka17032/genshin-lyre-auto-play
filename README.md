@@ -1,5 +1,6 @@
 <h1 align="center">Genshin-lyre-auto-play</h1>
-简体中文 | [English](./README_en.md)
+
+简体中文| [English](./README_en.md)
 
 ## 简介
 根据midi文件演奏“风物之诗琴”的脚本。由Python驱动,在此承诺，⚠️项目内绝不含任何能够引起安全问题的代码。
