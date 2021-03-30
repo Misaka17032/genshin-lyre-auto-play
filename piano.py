@@ -73,7 +73,13 @@ else:
 	ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, __file__, None, 1)
 	exit(0)
 
-midi_file = input("Midi文件名（不含后缀）：")
+song_list = os.listdir("./songs/")
+for song_count in range(0,len(song_list)):
+	print(str(song_count) + "：" + song_list[song_count])
+
+midi_file = song_list[int(input("输入您要弹奏的midi编号并按回车："))][:-4]
+print("您将要弹奏的是：" + midi_file)
+
 try:
 	midi_object = MidiFile("./songs/" + midi_file + ".mid")
 except:
