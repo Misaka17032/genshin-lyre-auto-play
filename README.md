@@ -53,6 +53,8 @@ pip install -i https://pypi.tuna.tsinghua.edu.cn/simple -r requirements.txt
 
 使用管理员权限运行`python piano.py`，或者双击`run.bat`
 
+运行`python export.py`即可导出按键谱。
+
 </details>
 
 ## 注意
