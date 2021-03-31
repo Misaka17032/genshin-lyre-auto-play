@@ -1,0 +1,83 @@
+name: windows-exe-build
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-2019
+    name: build windows binary
+
+    steps:
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.8"
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Cache Dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~\AppData\Local\pip\Cache
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+
+      - name: Build exe binary and archive
+        shell: cmd
+        run: |
+          echo ::group::Install Dependencies
+          pip install -r requirements.txt
+          pip install pyinstaller
+          echo ::endgroup::
+          echo ::group::Build Binary
+          pyinstaller -F -i favicon.ico piano.py --uac-admin
+          echo ::endgroup::
+          echo ::group::Copy file
+          mkdir -p .\dist\songs
+          xcopy .\songs .\dist\songs /S
+          echo ::endgroup::
+          
+          echo ::group::Zipfile
+          7z a piano-windows64.zip .\dist\*
+          echo ::endgroup::
+          
+          echo ::group::Build us_en
+          mkdir -p .\dist2\songs
+          xcopy .\songs .\dist2\songs /S
+          pyinstaller -F -i favicon.ico piano_en.py --uac-admin --distpath=.\dist2
+          7z a piano-windows64-us_en.zip .\dist2\*
+          echo ::endgroup::
+      
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with: 
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: .\piano-windows64.zip
+          asset_name: piano-windows64-zh_CN.zip
+          asset_content_type: application/zip
+      
+      - name: Upload Release us_en
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: .\piano-windows64-us_en.zip
+          asset_name: piano-windows64-us_en.zip
+          asset_content_type: application/zip
