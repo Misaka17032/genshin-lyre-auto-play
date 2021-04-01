@@ -61,6 +61,7 @@ def watch_dog(name):
 	while True:
 		if win32gui.GetWindowText(win32gui.GetForegroundWindow())!=name:
 			os._exit(0)
+		time.sleep(0.01)
 
 def is_admin():
 	try:
